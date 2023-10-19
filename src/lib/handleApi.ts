@@ -1,22 +1,136 @@
+export const aiAssistanceMethods = [
+    "translate",
+    "highlight",
+    "explain",
+    "summarize"
+];
+const baseRoute = "https://sturdy-funicular-74wg96x6947fppg-5000.app.github.dev/";
+
+export const Languages = [
+    "English",
+    "Spanish",
+    "Mandarin",
+    "Hindi",
+    "Arabic",
+    "Bengali",
+    "Portuguese",
+    "Russian",
+    "Japanese",
+    "German",
+    "Javanese",
+    "Wu Chinese",
+    "Telugu",
+    "Marathi",
+    "Turkish",
+    "Tamil",
+    "French",
+    "Urdu",
+    "Korean",
+    "Italian",
+    "Punjabi",
+    "Hausa",
+    "Thai",
+    "Gujarati",
+    "Kannada",
+    "Oriya",
+    "Malayalam",
+    "Sundanese",
+    "Polish",
+    "Burmese",
+    "Ukrainian",
+    "Bhojpuri",
+    "Tagalog",
+    "Yoruba",
+    "Maithili",
+    "Uzbek",
+    "Sindhi",
+    "Amharic",
+    "Fula",
+    "Romanian",
+    "Oromo",
+    "Igbo",
+    "Azerbaijani",
+    "Awadhi",
+    "Gan Chinese",
+    "Cebuano",
+    "Dutch",
+    "Kurdish",
+    "Serbo-Croatian",
+    "Malagasy",
+    "Saraiki",
+    "Nepali",
+    "Sinhalese",
+    "Chittagonian",
+    "Zhuang",
+    "Khmer",
+    "Turkmen",
+    "Assamese",
+    "Madurese",
+    "Somali",
+    "Marwari",
+    "Magahi",
+    "Haryanvi",
+    "Hungarian",
+    "Chhattisgarhi",
+    "Greek",
+    "Chewa",
+    "Deccan",
+    "Akan",
+    "Kazakh",
+    "Azerbaijani",
+    "Sylheti",
+    "Zulu",
+    "Czech",
+    "Kinyarwanda",
+    "Dhundhari",
+    "Haitian Creole",
+    "Eastern Min",
+    "Ilocano",
+    "Quechua",
+    "Kirundi",
+    "Swedish",
+    "Hmong",
+    "Shona",
+    "Uyghur",
+    "Hiligaynon",
+    "Mossi",
+    "Xhosa",
+    "Belarusian",
+    "Balochi",
+    "Konkani",
+    "Yoruba",
+];
+
+
+async function requestTemplate(endpoint:string,lang:string,text:string){
+    let bodyContent = new FormData();
+    bodyContent.append("lang", lang);
+    bodyContent.append("text", text);
+    
+    let response = await fetch(baseRoute+endpoint, { 
+        method: "POST",
+        body: bodyContent,
+    });
+    return await response.text();
+}
+
+function highlightText(content:string,highlighted:string[]) {
+    let str = content
+    
+    for( let i of highlighted)
+        str.replace(i,`<mark>${i}</mark>`)
+    return str;
+    // return "<mark>Hola Mundo</mark>";
+}
+
 export default async (endpoint:string,language:string,content:string)=>{
-    if(!endpoint.length
-      ||!language.length
+    if( endpoint == "Select"
+      ||language == "Select"
       ||!content.length)
         throw new Error("please Select actual Data")
-    const obj = {
-        method:"POST",
-        body:{
-            text:content,
-            language,
-        }
-    }
-    // const response = await fetch("www.example/"+endpoint,obj as ResponseInit)
-    // const result =  await response.json();
-    // ! for testing Only
-    const result = {
-        endpoint,
-        content,
-        language,
-    };
-    return result;
+        const data = await requestTemplate(endpoint,language,content);
+        if(data[0] == "[")
+            return highlightText(content,JSON.parse(data))
+        else
+            return data;
 };

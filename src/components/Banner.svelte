@@ -6,6 +6,7 @@
     export let isChecked:boolean = false;
     export let burgerMenuBtn:HTMLInputElement;
     export let isUploaded:boolean = false;
+    export let bannerElement:HTMLElement;
 
     const stubbornLoad = (fn:()=>Promise<boolean>,gap:number)=>{
       openFileButton();
@@ -19,14 +20,15 @@
 </script>
 
 <div
-    class="bg-cyan-400 flex flex-row justify-between
+    bind:this={bannerElement}
+    class="bg-black flex flex-row justify-between
             p-3 h-[10%]"
 >
     <div class="flex flex-row items-center">
-        <div class="p-1 pr-6 border-solid border-black border-r-2 w-[30%]">
+        <div class="p-1 pr-6 border-solid border-[#a43da1] border-r-2 w-[30%]">
             <img src={ExaMateLogo} alt="Logo" />
         </div>
-        <label class="ml-6 text-3xl" for="logo">ExaMate</label>
+        <label class="ml-6 text-3xl text-[#53c4aa]" for="logo">ExaMate</label>
     </div>
     <div class="flex items-center">
 
@@ -35,8 +37,8 @@
             on:click={()=>stubbornLoad(HasFile,1000)}
             transition:slide={{axis:"x"}}
             class="p-3 rounded-2xl mr-10  hidden items-center justify-center
-                   text-xl border-solid border-2 border-black 
-                 hover:bg-white hover:bg-opacity-40 sm:flex"
+                   text-xl text-white border-solid border-2 border-white 
+                 hover:bg-cyan-400 hover:bg-opacity-20 sm:flex"
             >
             <img src={upload} class="mr-3" width="24" height="24" alt="uploadImg">
               Upload</button>
@@ -69,7 +71,7 @@
   position: absolute;
   height: 4px;
   width: 100%;
-  background: black;
+  background: white;
   border-radius: 9px;
   opacity: 1;
   left: 0;

@@ -11,13 +11,18 @@
   
   let isChecked = false;
   let content = "";
-  let This:any;
+  let response:string;
+  let This:HTMLElement;
   let styles:any;
   let requestBtn:HTMLButtonElement;
   let burgerMenuBtn:HTMLInputElement;
   let ErrorAccrued:boolean;
   let error:string;
   let isUploaded:boolean = false;
+  let assistanceMethod:string;
+  let language:string;
+  let sliderElement:HTMLElement;
+  let bannerElement:HTMLElement;
 
   selectionRetriever((str:string)=>{
     console.log(str);
@@ -33,7 +38,7 @@
         },gap)
     })
 
-      const colorChangerTemp = (el:HTMLElement,color:string,time:number)=>{
+    const colorChangerTemp = (el:HTMLElement,color:string,time:number)=>{
       const orgColor = el.style.color;
       el.style.color = color;
       setTimeout(() => {
@@ -50,15 +55,24 @@
 
 
     const aiAssistanceHandler = async ()=>{
+      if(!isChecked)
       burgerMenuBtn.click();
       await stubbornLoad(requestBtn,5,300);
-      requestBtn.click();
+    }
+
+    const focusRangeHandler = async ()=>{
+
+      injectEventListener("mouseup",e=>{
+      if(isChecked 
+      && content == "" 
+      && e.target !=This
+      && !This.contains(e.target as HTMLElement))
+        burgerMenuBtn.click();
+      })
+
     }
 
     const tooltipInit = async (e:Event)=>{
-      setTimeout(() => {
-        console.log(isUploaded);
-      }, 10000);
       injectElement(await This);
       const styleElement = document.createElement("style") as any;
       styleElement.innerHTML = await styles;
@@ -90,17 +104,31 @@
     }
     
     onMount(tooltipInit as unknown as ()=>void);
+    onMount(focusRangeHandler);
 </script>
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <main class="felx flex-col flex-grow w-full h-full">
-  <Banner bind:isUploaded bind:burgerMenuBtn bind:isChecked/>
-  <DropHover/>
+  <Banner
+  bind:isUploaded
+  bind:burgerMenuBtn
+  bind:isChecked
+  bind:bannerElement/>
+  <DropHover bind:hide={isUploaded} />
   <div class="h-[90%] flex">
   <Pdfreader bind:isUploaded/>
   {#if isChecked}
-    <Slider bind:content bind:requestBtn bind:ErrorAccrued bind:error />
+    <Slider
+    bind:sliderElement
+    bind:content
+    bind:requestBtn 
+    bind:ErrorAccrued 
+    bind:error
+    bind:response
+    bind:isUploaded
+    bind:assistanceMethod
+    bind:language/>
   {/if}
   
   </div>
