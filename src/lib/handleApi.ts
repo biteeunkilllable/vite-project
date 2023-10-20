@@ -4,7 +4,7 @@ export const aiAssistanceMethods = [
     "explain",
     "summarize"
 ];
-const baseRoute = "https://sturdy-funicular-74wg96x6947fppg-5000.app.github.dev/";
+const baseRoute = prompt("insert the base url (testing purposes only!)");
 
 export const Languages = [
     "English",
