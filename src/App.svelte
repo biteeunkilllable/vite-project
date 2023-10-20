@@ -7,6 +7,7 @@
   import Banner from "./components/Banner.svelte";
   import Pdfreader from "./components/pdfReader.svelte";
   import IframeToolTip from "./components/iframeToolTip.svelte";
+  import {siteTitle} from "./lib/handleApi";
   import { onMount } from "svelte";
   
   let isChecked = false;
@@ -106,6 +107,11 @@
     onMount(tooltipInit as unknown as ()=>void);
     onMount(focusRangeHandler);
 </script>
+
+<svelte:head>
+  <title>{siteTitle}</title>
+</svelte:head>
+
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->

@@ -1,4 +1,5 @@
-const stringReturnMethods:string[]=[
+export const siteTitle:string = "ExaMate";
+export const stringReturnMethods:string[]=[
     "translate",
     "explain",
     "summarize"
