@@ -25,9 +25,12 @@
             p-3 h-[10%]"
 >
     <div class="flex flex-row items-center">
-        <div class="p-1 pr-6 border-solid border-[#a43da1] border-r-2 w-[30%]">
+        <a 
+        class="p-1 pr-6 border-solid border-[#a43da1] 
+              border-r-2 w-[30%]"
+        href="#">
             <img src={ExaMateLogo} alt="Logo" />
-        </div>
+        </a>
         <label class="ml-6 text-3xl text-[#53c4aa]" for="logo">ExaMate</label>
     </div>
     <div class="flex items-center">

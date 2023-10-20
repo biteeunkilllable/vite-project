@@ -5,7 +5,7 @@
     import doubleArrowUp from "/double-arrow-up.svg";
     import dataHandler from "../lib/handleApi";
     import { slide,fade } from 'svelte/transition';
-    import {Languages,aiAssistanceMethods} from "../lib/handleApi";
+    import {Languages,aiAssistanceMethods,lstReturnMethods} from "../lib/handleApi";
     import { onMount } from "svelte";
     
     export let content:string = "";
@@ -70,19 +70,22 @@
 
     const init = ()=>{
         sliderElement.addEventListener("click",e =>{
+
+
             if(e.target != aiDrop
             && !aiDrop.contains(e.target as Node)
             && showMethods
             && e.target !=searchMethods
-            && searchMethods.contains(e.target as Node))
+            && !searchMethods.contains(e.target as Node))
             return aiDrop.click();
 
             if(e.target != langDrop
             && !langDrop.contains(e.target as Node)
             && showLangs
             && e.target !=searchLanguages
-            && searchLanguages.contains(e.target as Node))
+            && !searchLanguages.contains(e.target as Node))
             return langDrop.click();
+            
         })
 
     }
@@ -127,6 +130,9 @@
         </div>
         <div >
             <p class="text-lg mb-5">Languages</p>
+            {#if lstReturnMethods.includes(assistanceMethod)}
+            <DropDown disabled={true}/>
+            {:else}
             <DropDown
             bind:dropBtn={langDrop}
             bind:dropDownElement={languages}
@@ -134,6 +140,7 @@
             bind:value={language}
             bind:drop={showLangs}
             bind:searchElement={searchLanguages}/>
+            {/if}
         </div>
     </div>
     

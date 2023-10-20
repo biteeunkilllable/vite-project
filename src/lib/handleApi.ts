@@ -1,8 +1,14 @@
-export const aiAssistanceMethods = [
+const stringReturnMethods:string[]=[
     "translate",
-    "highlight",
     "explain",
     "summarize"
+];
+export const lstReturnMethods:string[]=[
+    "highlight",
+];
+export const aiAssistanceMethods = [
+    ...stringReturnMethods,
+    ...lstReturnMethods,
 ];
 const baseRoute = prompt("insert the base url (testing purposes only!)");
 

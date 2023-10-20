@@ -3,25 +3,42 @@
     import {slide} from "svelte/transition"
 
     export let value = "Select";
-    export let Options = ["option 1","option 2","option 3"];
-    export let dropBtn:HTMLElement | null;
+    export let Options:string[] = [];
+    export let dropBtn:HTMLElement | null = null;
     export let drop = false;
-    export let searchElement:HTMLElement
+    export let searchElement:HTMLElement | null = null;
     export const dropDownElement: HTMLElement | null = null;
+    export let disabled:boolean = false;
 
     let search:string = "";
 </script>
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div 
+{#if disabled}
+    <div
+    bind:this={dropBtn}
+    class="w-full bg-white p-1 cursor-not-allowed border-solid border-gray-400 border-[1px]"
+    on:click={ e =>drop = !drop}
+    >
+    <p class="text-gray-400 flex justify-between">{value}
+        <span class="my-auto">
+            <svg width="16" height="16" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                <path fill="currentColor" d="M104.704 338.752a64 64 0 0 1 90.496 0l316.8 316.8l316.8-316.8a64 64 0 0 1 90.496 90.496L557.248 791.296a64 64 0 0 1-90.496 0L104.704 429.248a64 64 0 0 1 0-90.496z"/>
+            </svg>
+        </span>
+    </p>
+    </div>    
+{:else}
+    <div 
     bind:this={dropBtn}
 class="w-full bg-white p-1 cursor-pointer border-solid border-black border-[1px]"
     on:click={ e =>drop = !drop}
     >
     <p class="flex justify-between">{value} <img src={arrowDown} width="16px" height="16px" alt="downArrow"></p>
 </div>
-{#if drop}
+{/if}
+{#if drop && !disabled}
     <div
     class="absolute border-solid border-2 border-gray-100 p-2
             translate-y-6 bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)]

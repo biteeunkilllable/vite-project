@@ -62,7 +62,7 @@
 
     const focusRangeHandler = async ()=>{
 
-      injectEventListener("mouseup",e=>{
+      injectEventListener("pointerup",e=>{
       if(isChecked 
       && content == "" 
       && e.target !=This
@@ -73,7 +73,7 @@
     }
 
     const tooltipInit = async (e:Event)=>{
-      injectElement(await This);
+      injectElement(This);
       const styleElement = document.createElement("style") as any;
       styleElement.innerHTML = await styles;
       injectHeader(styleElement)
@@ -85,7 +85,7 @@
 
         const x =  e.currentTarget.getSelection()?.toString().length;
         if(!x){
-          console.log("no selection");
+          // console.log("no selection");
           tooltip.style.visibility = "hidden";
           return;
         }
@@ -133,8 +133,9 @@
   
   </div>
 </main>
-<IframeToolTip bind:styles bind:This>
-<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div class="hidden">
+  <IframeToolTip bind:styles bind:This>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <span on:click={copyHandler} class="rounded-md hover:opacity-50 z-10">
@@ -144,10 +145,11 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-| <span on:click={aiAssistanceHandler} class="rounded-md hover:opacity-50 z-10">
+  | <span on:click={aiAssistanceHandler} class="rounded-md hover:opacity-50 z-10">
     <ExaMateLogo width="28px" height="28px" />
   </span>
 </IframeToolTip>
+</div>
 {#if ErrorAccrued}
   <ErrorPopup bind:msg={error} />
 {/if}
