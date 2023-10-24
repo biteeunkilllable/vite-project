@@ -13,7 +13,7 @@
   let isChecked = false;
   let content = "";
   let response:string;
-  let This:HTMLElement;
+  let toolTip:HTMLElement;
   let styles:any;
   let requestBtn:HTMLButtonElement;
   let burgerMenuBtn:HTMLInputElement;
@@ -66,15 +66,16 @@
       injectEventListener("pointerup",e=>{
       if(isChecked 
       && content == "" 
-      && e.target !=This
-      && !This.contains(e.target as HTMLElement))
+      && e.target !=toolTip
+      && !toolTip.contains(e.target as HTMLElement))
         burgerMenuBtn.click();
       })
 
     }
 
-    const tooltipInit = async (e:Event)=>{
-      injectElement(This);
+    const tooltipInit = async ()=>{
+      await stubbornLoad(toolTip,30,300);
+      injectElement(toolTip);
       const styleElement = document.createElement("style") as any;
       styleElement.innerHTML = await styles;
       injectHeader(styleElement)
@@ -99,8 +100,8 @@
           || clickedChild )
         return;
 
-        This.style.top = e.clientY + "px";
-        This.style.left = e.clientX + "px";
+        toolTip.style.top = e.clientY + "px";
+        toolTip.style.left = e.clientX + "px";
       })
     }
     
@@ -139,8 +140,8 @@
   
   </div>
 </main>
-<div class="hidden">
-  <IframeToolTip bind:styles bind:This>
+<div >
+  <IframeToolTip bind:styles bind:This={toolTip}>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
   <!-- svelte-ignore a11y-click-events-have-key-events -->
